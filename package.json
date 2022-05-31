@@ -1,0 +1,67 @@
+{
+  "name": "gotec-pos",
+  "version": "0.0.1",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yahyameo/billing_app_setup.git"
+  },
+  "scripts": {
+    "ng": "ng",
+    "ng-high-memory": "node --max_old_space_size=8000 ./node_modules/@angular/cli/bin/ng build --configuration=prod",
+    "start": "ng build --base-href ./ && electron .",
+    "pack": "dist --dir",
+    "dist": "electron-builder",
+    "postinstall": "install-app-deps",
+    "build": "ng build --prod",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "electron": "electron .",
+    "electron-build": "ng build --prod && electron .",
+    "electron-package": "electron-packager . GOTECPOS --platform=win32 --arch=ia32",
+    "deploy": "electron-builder build --win --publish always"
+  },
+  "private": true,
+  "dependencies": {
+    "electron-updater": "^5.0.1"
+  },
+  "devDependencies": {
+    "electron": "^18.0.4",
+    "electron-builder": "^23.0.3"
+  },
+  "build": {
+    "appId": "com.pos.gotec",
+    "productName": "Gotec POS",
+    "files": [
+      "!**/*",
+      "node_modules/**/*",
+      "dist/**/*",
+      "app.js",
+      "electron-builder.yml",
+      "worker.html"
+    ],
+    "directories": {
+      "output": "release",
+      "buildResources": "dist"
+    },
+    "asar": true,
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "runAfterFinish": true,
+      "installerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "deleteAppDataOnUninstall": true
+    }
+  }
+}
